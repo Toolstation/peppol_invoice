@@ -15,6 +15,8 @@ use Sabre\Xml\XmlSerializable;
 class Invoice implements XmlSerializable{
     private $UBLVersionID = '2.1';
 
+    const UBL_CUSTOM_ID = 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0';
+
     /**
      * @var int
      */
@@ -106,9 +108,8 @@ class Invoice implements XmlSerializable{
 
         $writer->write([
             Schema::CBC . 'UBLVersionID' => $this->UBLVersionID,
-            Schema::CBC . 'CustomizationID' => 'OIOUBL-2.01',
+            Schema::CBC . 'CustomizationID' => self::UBL_CUSTOM_ID,
             Schema::CBC . 'ID' => $this->id,
-            Schema::CBC . 'CopyIndicator' => $this->copyIndicator ? 'true' : 'false',
             Schema::CBC . 'IssueDate' => $this->issueDate->format('Y-m-d'),
             Schema::CBC . 'InvoiceTypeCode' => $this->invoiceTypeCode,
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],

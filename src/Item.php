@@ -75,11 +75,18 @@ class Item implements XmlSerializable {
      */
     function xmlSerialize(Writer $writer) {
         $writer->write([
-           Schema::CBC.'Description' => $this->description,
-           Schema::CBC.'Name' => $this->name,
-           Schema::CAC.'SellersItemIdentification' => [
-               Schema::CBC.'ID' => $this->sellersItemIdentification
-           ],
+            Schema::CBC.'Description' => $this->description,
+            Schema::CBC.'Name' => $this->name,
+            Schema::CAC.'SellersItemIdentification' => [
+                Schema::CBC.'ID' => $this->sellersItemIdentification
+            ],
+            Schema::CAC.'ClassifiedTaxCategory' => [
+                Schema::CBC.'ID' => 'S', // S is for VAT https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/
+                Schema::CBC.'Percent' => '21',
+                Schema::CAC.'Percent' => [
+                    Schema::CBC.'ID' => 'VAT',
+                ]
+            ],
         ]);
     }
 }
