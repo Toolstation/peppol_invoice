@@ -42,6 +42,10 @@ class Party implements XmlSerializable{
 	 */
     private $legalEntity;
 
+    private $language;
+    private $endpointId;
+    private $endpointIdScheme;
+
     /**
      * @return mixed
      */
@@ -151,7 +155,26 @@ class Party implements XmlSerializable{
         return $this;
     }
 
+    public function setEndpointId($value, $scheme) {
+        $this->endpointId = $value;
+        $this->endpointIdScheme = $scheme;
+        return $this;
+    }
+
     function xmlSerialize(Writer $writer) {
+
+        if($this->endpointId && $this->endpointIdScheme){
+            $writer->write([
+                [
+                    'name' => Schema::CBC.'EndpointID',
+                    'value' => $this->endpointId,
+                    'attributes' => [
+                        'schemeID' => $this->endpointIdScheme
+                    ]
+                ]
+            ]);
+        }
+
         $writer->write([
             Schema::CAC.'PartyName' => [
                 Schema::CBC.'Name' => $this->name
@@ -159,18 +182,24 @@ class Party implements XmlSerializable{
             Schema::CAC.'PostalAddress' => $this->postalAddress
         ]);
 
-	    if($this->taxScheme){
-		    $writer->write([
-			    Schema::CAC.'PartyTaxScheme' => [
-				    Schema::CBC.'CompanyID' => $this->companyId,
-                    Schema::CAC.'TaxScheme' => $this->taxScheme
-			    ],
-		    ]);
-	    }
+        if($this->taxScheme){
+            $writer->write([
+                Schema::CAC.'PartyTaxScheme' => [
+                    Schema::CBC.'CompanyID' => $this->companyId,
+                    Schema::CAC.'TaxScheme' => [Schema::CBC.'ID' => $this->taxScheme]
+                ],
+            ]);
+        }
 
         if($this->physicalLocation){
             $writer->write([
-               Schema::CAC.'PhysicalLocation' => [Schema::CAC.'Address' => $this->physicalLocation]
+                Schema::CAC.'PhysicalLocation' => [Schema::CAC.'Address' => $this->physicalLocation]
+            ]);
+        }
+
+        if($this->legalEntity){
+            $writer->write([
+                Schema::CAC.'PartyLegalEntity' => $this->legalEntity
             ]);
         }
 
