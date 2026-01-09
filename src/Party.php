@@ -155,6 +155,11 @@ class Party implements XmlSerializable{
         return $this;
     }
 
+    public function setLanguage($language) {
+        $this->language = $language;
+        return $this;
+    }
+
     public function setEndpointId($value, $scheme) {
         $this->endpointId = $value;
         $this->endpointIdScheme = $scheme;
@@ -181,6 +186,14 @@ class Party implements XmlSerializable{
             ],
             Schema::CAC.'PostalAddress' => $this->postalAddress
         ]);
+
+        if($this->language){
+            $writer->write([
+                Schema::CAC.'Language' => [
+                    Schema::CBC.'ID' => $this->language
+                ]
+            ]);
+        }
 
         if($this->taxScheme){
             $writer->write([
