@@ -20,6 +20,7 @@ class TaxSubTotal implements XmlSerializable {
      * @var TaxCategory
      */
     private $taxCategory;
+    private $percent;
 
     /**
      * @return mixed
@@ -69,6 +70,10 @@ class TaxSubTotal implements XmlSerializable {
         return $this;
     }
 
+    public function setPercent($percent) {
+        $this->percent = $percent;
+        return $this;
+    }
 
     public function validate() {
         if ($this->taxableAmount === null) {
