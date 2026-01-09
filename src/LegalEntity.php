@@ -25,6 +25,7 @@ class LegalEntity implements XmlSerializable {
 
 	public function getRegistrationName() {
 		return $this->registrationName;
+        return $this;
 	}
 
 	public function setRegistrationName($registrationName) {
@@ -33,10 +34,12 @@ class LegalEntity implements XmlSerializable {
 
 	public function getCompanyId() {
 		return $this->companyId;
+        return $this;
 	}
 
 	public function setCompanyId($companyId) {
 		$this->companyId = $companyId;
+        return $this;
 	}
 
 	function xmlSerialize(Writer $writer) {
