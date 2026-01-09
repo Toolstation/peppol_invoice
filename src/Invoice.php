@@ -66,6 +66,14 @@ class Invoice implements XmlSerializable{
      */
     private $allowanceCharges;
 
+    private $paymentMeans;
+    private $paymentTerms;
+    private $orderReference;
+    private $note;
+    private $receiverCustomerId;
+    private $currencyCode;
+    private $profileId;
+
 
     function validate()
     {
@@ -110,10 +118,16 @@ class Invoice implements XmlSerializable{
             Schema::CBC . 'UBLVersionID' => $this->UBLVersionID,
             Schema::CBC . 'CustomizationID' => self::UBL_CUSTOM_ID,
             Schema::CBC . 'ID' => $this->id,
+            Schema::CBC . 'ProfileID' => $this->profileId,
             Schema::CBC . 'IssueDate' => $this->issueDate->format('Y-m-d'),
             Schema::CBC . 'InvoiceTypeCode' => $this->invoiceTypeCode,
+            Schema::CBC . 'Note' => $this->note,
+            Schema::CBC . 'DocumentCurrencyCode' => $this->currencyCode,
+            Schema::CBC . 'OrderReference' => [Schema::CBC . 'ID' => $this->orderReference],
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
             Schema::CAC . 'AccountingCustomerParty' => [Schema::CAC . "Party" => $this->accountingCustomerParty],
+            Schema::CBC . 'PaymentMeans' => $this->paymentMeans,
+            Schema::CBC . 'PaymentTerms' => [Schema::CBC . 'Note' => $this->paymentTerms],
         ]);
 
         if($this->additionalDocumentReference!= null){
@@ -164,19 +178,15 @@ class Invoice implements XmlSerializable{
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isCopyIndicator() {
-        return $this->copyIndicator;
+    public function setProfileId($profileId)
+    {
+        $this->profileId = $profileId;
+        return $this;
     }
 
-    /**
-     * @param boolean $copyIndicator
-     * @return Invoice
-     */
-    public function setCopyIndicator($copyIndicator) {
-        $this->copyIndicator = $copyIndicator;
+    public function setCurrencyCode($currencyCode)
+    {
+        $this->currencyCode = $currencyCode;
         return $this;
     }
 
@@ -324,4 +334,28 @@ class Invoice implements XmlSerializable{
         return $this;
     }
 
+    public function setReceiverCustomerId($receiverCustomerId) {
+        $this->receiverCustomerId = $receiverCustomerId;
+        return $this;
+    }
+
+    public function setPaymentMeans($paymentMeans) {
+        $this->paymentMeans = $paymentMeans;
+        return $this;
+    }
+
+    public function setOrderReference($orderReference) {
+        $this->orderReference = $orderReference;
+        return $this;
+    }
+
+    public function setPaymentTerms($paymentTerms) {
+        $this->paymentTerms = $paymentTerms;
+        return $this;
+    }
+
+    public function setNote($note) {
+        $this->note = $note;
+        return $this;
+    }
 }
