@@ -117,17 +117,23 @@ class Invoice implements XmlSerializable{
         $writer->write([
             Schema::CBC . 'UBLVersionID' => $this->UBLVersionID,
             Schema::CBC . 'CustomizationID' => self::UBL_CUSTOM_ID,
-            Schema::CBC . 'ID' => $this->id,
             Schema::CBC . 'ProfileID' => $this->profileId,
+            Schema::CBC . 'ID' => $this->id,
             Schema::CBC . 'IssueDate' => $this->issueDate->format('Y-m-d'),
             Schema::CBC . 'InvoiceTypeCode' => $this->invoiceTypeCode,
             Schema::CBC . 'Note' => $this->note,
             Schema::CBC . 'DocumentCurrencyCode' => $this->currencyCode,
-            Schema::CBC . 'OrderReference' => [Schema::CBC . 'ID' => $this->orderReference],
+            Schema::CBC . 'TaxCurrencyCode' => $this->currencyCode,
+            Schema::CAC . 'OrderReference' => [
+                Schema::CBC . 'ID' => $this->orderReference,
+                Schema::CBC . 'SalesOrderID' => $this->id
+            ],
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
             Schema::CAC . 'AccountingCustomerParty' => [Schema::CAC . "Party" => $this->accountingCustomerParty],
             Schema::CBC . 'PaymentMeans' => $this->paymentMeans,
-            Schema::CBC . 'PaymentTerms' => [Schema::CBC . 'Note' => $this->paymentTerms],
+            Schema::CAC . 'PaymentTerms' => [
+                Schema::CBC . 'Note' => $this->paymentTerms
+            ],
         ]);
 
         if($this->additionalDocumentReference!= null){
