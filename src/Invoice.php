@@ -130,7 +130,6 @@ class Invoice implements XmlSerializable{
             ],
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
             Schema::CAC . 'AccountingCustomerParty' => [Schema::CAC . "Party" => $this->accountingCustomerParty],
-            Schema::CBC . 'PaymentMeans' => $this->paymentMeans,
             Schema::CAC . 'PaymentTerms' => [
                 Schema::CBC . 'Note' => $this->paymentTerms
             ],

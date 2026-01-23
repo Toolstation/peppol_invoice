@@ -70,11 +70,6 @@ class TaxSubTotal implements XmlSerializable {
         return $this;
     }
 
-    public function setPercent($percent) {
-        $this->percent = $percent;
-        return $this;
-    }
-
     public function validate() {
         if ($this->taxableAmount === null) {
             throw new \InvalidArgumentException('Missing taxsubtotal taxableAmount');

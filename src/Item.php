@@ -83,7 +83,7 @@ class Item implements XmlSerializable {
             Schema::CAC.'ClassifiedTaxCategory' => [
                 Schema::CBC.'ID' => 'S', // S is for VAT https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/
                 Schema::CBC.'Percent' => '21',
-                Schema::CAC.'Percent' => [
+                Schema::CAC.'TaxScheme' => [
                     Schema::CBC.'ID' => 'VAT',
                 ]
             ],
