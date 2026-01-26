@@ -123,7 +123,6 @@ class Invoice implements XmlSerializable{
             Schema::CBC . 'InvoiceTypeCode' => $this->invoiceTypeCode,
             Schema::CBC . 'Note' => $this->note ?: 'NA',
             Schema::CBC . 'DocumentCurrencyCode' => $this->currencyCode,
-            Schema::CBC . 'TaxCurrencyCode' => $this->currencyCode,
             Schema::CAC . 'OrderReference' => [
                 Schema::CBC . 'ID' => $this->orderReference,
                 Schema::CBC . 'SalesOrderID' => $this->id
